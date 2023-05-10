@@ -1,7 +1,7 @@
-const display = document.querySelector("display");
-const buttons = document.querySelectorAll("button");
-const equals = document.querySelector("equals");
-const reset = document.querySelector("reset");
+const display = document.querySelector(".display");
+const buttons = document.querySelectorAll(".button");
+const equals = document.querySelector(".equals");
+const reset = document.querySelector(".reset");
 
 
 let activeInput = "0";           /* const og let brukar ein for å lage variablar*/
@@ -16,7 +16,7 @@ function addNumber(number) {    /* legger til/oppdaterer nummer til "activeInput
 if (activeInput === "0"){       /* legger til nummer til det som visest på skjermen, viss nr allereie er null, så erstatter det det med eit nytt nummer,
                                 ellers legger det til eit nytt nummer på slutten av inputen(vi har satt 0 som utg,pkt. over) eks: 4 står frå før, skriver inn "3", resultat "43"*/ 
 activeInput = number;           /* for at det skal vise et nummer*/
-                                /* Blir aktivert, "calla" når eit nr-knapp blir trykt på*/  
+                                /* Blir aktivert, "calla" når ein nr-knapp blir trykt på*/  
 }
 else {activeInput += number}    /* Viss 0, blir det erstatta, ellers blir det lagt til et nummer*/
 updateDisplay();                /*kommando; kjør funksjon din jævel*/   
@@ -29,11 +29,12 @@ startCalculation();
 } 
 mathSigns = newSign;
 previousInput = activeInput;
-activeInput = "null";
+activeInput = "";
 updateDisplay(); 
 } 
 
-function startCalculation() {
+function startCalculation() {                           
+
 const previous = parseFloat(previousInput);
 const active = parseFloat(activeInput);
 
@@ -41,9 +42,9 @@ if (mathSigns === "+") {
 activeInput = previous + active;
 }
 
-else if (mathSigns === "-") {previous - active;} 
-else if (mathSigns === "*") {previous * active;}
-else if (mathSigns === "/") {previous / active;}  
+else if (mathSigns === "-") {activeInput = previous - active;} 
+else if (mathSigns === "*") {activeInput = previous * active;}
+else if (mathSigns === "/") {activeInput = previous / active;}  
 
 mathSigns = null;
 previousInput = null;
@@ -63,8 +64,8 @@ const buttonValue = button.textContent;
 if (/\d/.test(buttonValue)) {
 addNumber(buttonValue); } 
 else if (buttonValue === ".") { 
-if (!currentInput.includes("")) {
-currentInput += "."; 
+if (!activeInput.includes(".")) {
+activeInput += "."; 
 updateDisplay();   
 }    
     
@@ -75,13 +76,13 @@ setSign(buttonValue);
 });   
 });
 
-/*reset.addEventListener("click", resetInput);
+reset.addEventListener("click", resetInput);
 
-console.log(reset);
+
 
 equals.addEventListener("click", () => {
 if (mathSigns !== null) {
 startCalculation();    
 }  
 }) 
-*/
+
